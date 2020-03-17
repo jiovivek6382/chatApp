@@ -8,6 +8,26 @@ document.addEventListener('keydown', function(key){
     }
 });
 
+function loadAllEmoji() {
+    var emoji = '';
+    for (var i = 128512; i <= 128566; i++) {
+        emoji += `<a href="#" style="font-size: 22px;" onclick="getEmoji(this);">&#${i}</a>`;   
+    }
+    document.getElementById('smiley').innerHTML = emoji;
+}
+
+function showEmojiPanel() {
+    document.getElementById('emoji').removeAttribute('style');
+}
+
+function hideEmojiPanel() {
+    document.getElementById('emoji').setAttribute('style', 'display:none;');
+}
+
+function getEmoji(control) {
+    document.getElementById('txtMessage').value += control.innerHTML; 
+}
+
 function startChat(friendKey, friendName, friendPhoto) {
     var friendList = { friendId: friendKey, userId: currentUserKey };
 

@@ -105,3 +105,19 @@ body {
 .dropdown-toggle::after {
     display: none !important;
 }
+
+#emoji {
+    position: absolute;
+    top: -30vh;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+#emoji #myTabContent {
+    height: 20vh;
+}
+
+#myTabContent a {
+    text-decoration: none;
+}
