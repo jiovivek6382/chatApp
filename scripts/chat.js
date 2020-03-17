@@ -8,6 +8,9 @@ document.addEventListener('keydown', function(key){
     }
 });
 
+// Emoji
+loadAllEmoji();
+
 function loadAllEmoji() {
     var emoji = '';
     for (var i = 128512; i <= 128566; i++) {
