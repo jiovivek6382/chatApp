@@ -59,15 +59,21 @@ function loadChatMessages(chatKey, friendPhoto) {
         chats.forEach(function(data) {
             var chat = data.val();
             var dateTime = chat.dateTime.split(",");
-            // var sent = false;
-            // firebase.database().ref('friend_list').child(chat.userId);
+
+            var msg = '';
+            if (chat.msg.indexOf("base64") !== 1) {
+                msg =  `<img src='${chat.msg}' class="img-fluid" />`;
+            } else {
+                msg = chat.msg;
+            }
+
             if (chat.userId !== currentUserKey) {
                 messageDisplay += `<div class="row">
                                     <div class="col-2 col-sm-1 col-md-1">
                                         <img src="${friendPhoto}" class="chat-pic rounded-circle">
                                     </div>
                                     <div class="col-6 col-sm-7 col-md-7">
-                                        <p class="receive">${chat.msg}<span class="time float-right" title="${dateTime[0]}">${dateTime[1]}</span>
+                                        <p class="receive">${msg}<span class="time float-right" title="${dateTime[0]}">${dateTime[1]}</span>
                                         </p>
                                     </div>
                                 </div>`;
@@ -76,7 +82,7 @@ function loadChatMessages(chatKey, friendPhoto) {
                     <div class="row justify-content-end">
                         <div class="col-6 col-sm-7 col-md-7">
                             <p class="sent float-right">
-                            ${chat.msg}
+                            ${msg}
                             <span class="time float-right" title="${dateTime[0]}">${dateTime[1]}</span>
                             </p>
                         </div>
@@ -133,6 +139,41 @@ function sendMessage() {
             // document.getElementById('messages').scrollTo(0, document.getElementById('messages').scrollHeight);
         }
     });
+}
+
+function chooseImage() {
+    document.getElementById('imageFile').click();
+}
+
+function sendImage(event) {
+    var file = event.files[0];
+    if (!file.type.match("image.*")) {
+        alert("Please select image only.");
+    } else {
+        var reader = new FileReader();
+        reader.addEventListener("load", function() {
+            
+            var chatMessage = {
+                userId: currentUserKey,
+                msg: reader.result,
+                dateTime: new Date().toLocaleString()
+            }
+        
+            firebase.database().ref('chatMessages').child(chatKey).push(chatMessage, function(error) {
+                if (error) {
+                    alert(error);
+                } else{
+                     document.getElementById('txtMessage').value = '';
+                     document.getElementById('txtMessage').focus();
+                }
+            });
+
+        }, false);
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
 }
 
 function loadChatList() {

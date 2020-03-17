@@ -55,6 +55,7 @@ body {
 .icon {
     font-size: 20px;
     color: #9CA1A3;
+    cursor: pointer;
 }
 
 .chat-pic {
@@ -92,6 +93,15 @@ body {
     overflow-x: hidden;
 }
 
+#lstChat {
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
 .dropdown-toggle::before {
+    display: none !important;
+}
+
+.dropdown-toggle::after {
     display: none !important;
 }
